@@ -34,10 +34,9 @@ form.addEventListener("submit", (event) => {
     
     // Display the rounded quotient
     result.innerText = dividend && divider ? roundedQuotient : "Division not performed. Both values are required in inputs. Try again";
-    console.error("Not enough values are present")
   } catch (error) {
     // Handle any errors that occur during calculation
-    let body = document.querySelector(".bodi").innerText = "Something critical went wrong. Please reload the page.";
+    let body = document.querySelector(".bodi").innerHTML = "<h1> Something critical went wrong. Please reload the page. </h1>";
     // Log error with call stack
     console.error(error.stack);
   };  
