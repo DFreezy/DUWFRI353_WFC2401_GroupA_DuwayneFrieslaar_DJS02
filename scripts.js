@@ -10,16 +10,22 @@ form.addEventListener("submit", (event) => {
 const form = document.querySelector("[data-form]");
 const result = document.querySelector("[data-result]");
 
-
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const entries = new FormData(event.target);
   const { dividend, divider } = Object.fromEntries(entries);
+
+  try {
+    // Validate if dividend and divider are numbers
+    if (isNaN(dividend) || isNaN(divider)) {
+      throw new Error("Invalid input. Please enter numeric values.");
+    }
   
-  // Check if either dividend or divider is less than 1
-  if (dividend < 1 || divider < 1) {
-    result.innerText = "Division not performed. Invalid number provided. Try again";
-  } else {
+    // Check if either dividend or divider is less than 1
+      result.innerText = dividend || divider ? 1 : "Division not performed. Invalid number provided. Try again";
+      console.error("Error: Invalid number provided. Try again");
+
+    
     // Calculate the quotient
     const quotient = dividend / divider;
     
@@ -27,8 +33,14 @@ form.addEventListener("submit", (event) => {
     const roundedQuotient = Math.floor(quotient);
     
     // Display the rounded quotient
-    result.innerText = dividend && divider ? roundedQuotient : 
-      "Division not performed. Both values are required in inputs. Try again.";
-  }
+    result.innerText = dividend && divider ? roundedQuotient : "Division not performed. Both values are required in inputs. Try again";
+  } catch (error) {
+    // Handle any errors that occur during calculation
+    console.error(error);
+    result.innerText = "Something critical went wrong. Please reload the page.";
+    // Log error with call stack
+    console.error(error.stack);
+  };  
 });
+
 
